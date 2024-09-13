@@ -2,11 +2,11 @@ import 'package:http/http.dart' as http;
 
 class ApiServices {
 
-  var client = http.Client();
-  final baseUrls = "cat-fact.herokuapp.com";
+  final _client = http.Client();
+  final _baseUrls = "cat-fact.herokuapp.com";
 
   Future<http.Response> fetchCatFactsApi() {
-    return client.get(Uri.https(baseUrls, "facts"));
+    return _client.get(Uri.https(_baseUrls, "facts"));
   }
 
 }
