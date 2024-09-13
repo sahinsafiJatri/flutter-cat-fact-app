@@ -5,12 +5,12 @@ sealed class ApiResult<Type> extends Equatable {
   List<Object?> get props => [];
 }
 
-final class ApiSuccess<Type> extends ApiResult {
+final class ApiSuccess<Type> extends ApiResult<Type> {
   final Type data;
   ApiSuccess(this.data);
 }
 
-final class ApiError<Type> extends ApiResult {
+final class ApiError<Type> extends ApiResult<Type> {
 
   final int errorCode;
   final String errorMessage;
