@@ -2,10 +2,8 @@
 
 Welcome to the **Flutter Clean Architecture** project! This Flutter application demonstrates the implementation of Clean Architecture principles combined with BLoC for state management, GetIt for dependency injection, and HTTP for network calls.
 
-<img src="screenshot/home_page.png" alt="Screenshot 1" width="400"/>
+<img src="screenshot/home_page.png" height="300em" /> <img src="screenshot/network_error_page.png" height="300em" />
 
-![Project Overview](screenshot/home_page.png)
-![Project Overview](screenshot/network_error_page.png)
 
 ## Project Structure
 
