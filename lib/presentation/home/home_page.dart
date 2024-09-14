@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cat_fact_app/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_cat_fact_app/presentation/home/home_page_cat_facts.dart';
-
 import '../../core/di/injection_container.dart';
 
 part 'home_page_banner.dart';
@@ -20,24 +19,13 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.pinkAccent,
         ),
         body: BlocProvider(
-          create: (_) => getIt<HomeBloc>(),
+          create: (_) => getIt<HomeBloc>()..add(GetCatFactsEvent()),
           child: _HomePageView(),
         ));
   }
 }
 
-class _HomePageView extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _HomePageStateView();
-}
-
-class _HomePageStateView extends State<_HomePageView> {
-
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<HomeBloc>(context).add(GetCatFactsEvent());
-  }
+class _HomePageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -50,26 +38,31 @@ class _HomePageStateView extends State<_HomePageView> {
             return ListView(
               children: [
                 HomePageBanner(bannerList: state.banners),
-                const Padding(
-                    padding: EdgeInsets.only(top: 16, left: 16),
-                    child: Text("Today's facts",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold))),
+                factLabel(),
                 Expanded(child: HomePageCatFacts(list: state.catFacts))
               ],
             );
           }
         case HomeApiFailed():
           {
-            return networkErrorView(state.errorMessage);
+            return networkErrorView(state.errorMessage, context);
           }
       }
     });
   }
 
-  networkErrorView(String errorMessage) {
-    return Center(
+  factLabel() {
+    return const Padding(
+        padding: EdgeInsets.only(top: 16, left: 16),
+        child: Text("Today's facts",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)));
+  }
+
+  networkErrorView(String errorMessage, BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
             Icons.network_check_sharp,
@@ -87,10 +80,7 @@ class _HomePageStateView extends State<_HomePageView> {
               BlocProvider.of<HomeBloc>(context).add(GetCatFactsEvent());
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.pink),
-            child: const Text(
-              "Retry",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: const Text("Retry", style: TextStyle(color: Colors.white),),
           )
         ],
       ),
