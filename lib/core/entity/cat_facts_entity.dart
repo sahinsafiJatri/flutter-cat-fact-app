@@ -50,17 +50,17 @@ class CatFactsEntity {
   bool? _deleted;
   bool? _used;
 
-  Status? get status => _status ?? Status();
-  String? get id => _id ?? "";
-  String? get user => _user ?? "";
-  String? get text => _text ?? "";
-  num? get v => _v ?? -1;
-  String? get source => _source ?? "";
-  String? get updatedAt => _updatedAt ?? "";
-  String? get type => _type ?? "";
-  String? get createdAt => _createdAt ?? "";
-  bool? get deleted => _deleted ?? false;
-  bool? get used => _used ?? false;
+  Status get status => _status ?? Status();
+  String get id => _id ?? "";
+  String get user => _user ?? "";
+  String get text => _text ?? "";
+  num get v => _v ?? -1;
+  String get source => _source ?? "";
+  String get updatedAt => _updatedAt ?? "";
+  String get type => _type ?? "";
+  String get createdAt => _createdAt ?? "";
+  bool get deleted => _deleted ?? false;
+  bool get used => _used ?? false;
 }
 
 class Status {
@@ -79,8 +79,8 @@ class Status {
   bool? _verified;
   num? _sentCount;
 
-  bool? get verified => _verified ?? false;
-  num? get sentCount => _sentCount ?? -1;
+  bool get verified => _verified ?? false;
+  num get sentCount => _sentCount ?? -1;
 
 
 }

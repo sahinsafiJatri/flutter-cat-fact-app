@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cat_fact_app/presentation/home/home_page.dart';
 import 'core/di/injection_container.dart';
+import 'my_bloc_observer.dart';
 
 void main() async {
+  Bloc.observer = const MyBlocObserver();
   await initializeDependencies();
   runApp(const MyApp());
 }
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: const HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
