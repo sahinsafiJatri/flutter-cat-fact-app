@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cat_fact_app/core/theme/theme.dart';
 import 'package:flutter_cat_fact_app/presentation/home/home_page.dart';
 import 'core/di/injection_container.dart';
 import 'my_bloc_observer.dart';
@@ -17,10 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: CatAppTheme.lightTheme,
+      darkTheme: CatAppTheme.darkTheme,
       home: const HomePage(),
       debugShowCheckedModeBanner: false,
     );

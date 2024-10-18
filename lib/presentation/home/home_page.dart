@@ -14,9 +14,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Cats facts", style: TextStyle(color: Colors.white),),
-          centerTitle: true,
-          backgroundColor: Colors.pinkAccent,
+          title: const Text("Cats facts"),
+          centerTitle: true
         ),
         body: BlocProvider(
           create: (_) => getIt<HomeBloc>()..add(GetCatFactsEvent()),
@@ -38,7 +37,7 @@ class _HomePageView extends StatelessWidget {
             return ListView(
               children: [
                 HomePageBanner(bannerList: state.banners),
-                factLabel(),
+                factLabel(context),
                 Expanded(child: HomePageCatFacts(list: state.catFacts))
               ],
             );
@@ -51,11 +50,12 @@ class _HomePageView extends StatelessWidget {
     });
   }
 
-  factLabel() {
-    return const Padding(
-        padding: EdgeInsets.only(top: 16, left: 16),
+  factLabel(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.only(top: 16, left: 16),
         child: Text("Today's facts",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)));
+            style: Theme.of(context).textTheme.titleLarge
+        ));
   }
 
   networkErrorView(String errorMessage, BuildContext context) {

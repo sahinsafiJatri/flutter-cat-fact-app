@@ -14,7 +14,7 @@ class HomePageCatFacts extends StatelessWidget {
         physics: const ScrollPhysics(),
         itemCount: list.length,
         itemBuilder: (context, index) {
-          return itemCatFact(list[index]);
+          return itemCatFact(list[index], context);
         });
   }
 
@@ -24,10 +24,9 @@ class HomePageCatFacts extends StatelessWidget {
     "https://cdn.openart.ai/uploads/image_1684475464028_1024.jpg"
   ];
 
-  itemCatFact(CatFactsEntity entity) {
+  itemCatFact(CatFactsEntity entity, BuildContext context) {
     return Card.filled(
       margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
-      color: const Color(0xFFFFE5EE),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
@@ -53,12 +52,11 @@ class HomePageCatFacts extends StatelessWidget {
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.left,
                   maxLines: 3,
-                  style: const TextStyle(fontSize: 14, color: Colors.pink),
+                    style: Theme.of(context).textTheme.bodyMedium
                 ),
                 const SizedBox(height: 12),
-                Text(
-                  "Date: ${FormatDate.formatDate(dateTime: DateTime.parse(entity.createdAt), format: "dd-mm-yy")}",
-                  style: const TextStyle(fontSize: 12, color: Colors.black54),
+                Text("Date: ${FormatDate.formatDate(dateTime: DateTime.parse(entity.createdAt), format: "dd-mm-yy")}",
+                  style: Theme.of(context).textTheme.bodySmall
                 )
               ],
             ))
