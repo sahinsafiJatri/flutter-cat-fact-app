@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cat_fact_app/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_cat_fact_app/presentation/home/home_page_cat_facts.dart';
 import '../../core/di/injection_container.dart';
+import '../../core/ui/NetworkError.dart';
 
 part 'home_page_banner.dart';
 
@@ -15,75 +16,46 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Cats facts"),
-          centerTitle: true
+          centerTitle: true,
         ),
         body: BlocProvider(
           create: (_) => getIt<HomeBloc>()..add(GetCatFactsEvent()),
-          child: _HomePageView(),
+          child: _buildBody(),
         ));
   }
-}
 
-class _HomePageView extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildBody() {
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-      switch (state) {
-        case HomeInitial():{
-          return const Center(child: CircularProgressIndicator());
-        }
-        case HomeApiSuccess():{
-            return ListView(
-              children: [
-                HomePageBanner(bannerList: state.banners),
-                factLabel(context),
-                Expanded(child: HomePageCatFacts(list: state.catFacts))
-              ],
-            );
-          }
-        case HomeApiFailed():
-          {
-            return networkErrorView(state.errorMessage, context);
-          }
+
+      if(state.isLoading) {
+        return const Center(child: CircularProgressIndicator());
       }
+
+      if(state.errorMessage.isNotEmpty) {
+        return NetworkError(
+            errorMessage: state.errorMessage,
+            retry: (){
+              BlocProvider.of<HomeBloc>(context).add(GetCatFactsEvent());
+            }
+        );
+      }
+
+      return ListView(
+        children: [
+          HomePageBanner(bannerList: state.banners),
+          factLabel(context),
+          Expanded(child: HomePageCatFacts(list: state.catFacts))
+        ],
+      );
+
     });
   }
 
   factLabel(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(top: 16, left: 16),
-        child: Text("Today's facts",
-            style: Theme.of(context).textTheme.titleLarge
-        ));
-  }
-
-  networkErrorView(String errorMessage, BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.network_check_sharp,
-            size: 100,
-            color: Colors.pinkAccent,
-          ),
-          const Text(
-            "Opps",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          Text(errorMessage),
-          const Padding(padding: EdgeInsets.only(top: 16)),
-          ElevatedButton(
-            onPressed: () {
-              BlocProvider.of<HomeBloc>(context).add(GetCatFactsEvent());
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.pink),
-            child: const Text("Retry", style: TextStyle(color: Colors.white),),
-          )
-        ],
-      ),
+        child: Text("Today's facts", style: Theme.of(context).textTheme.titleLarge)
     );
   }
+
 }
