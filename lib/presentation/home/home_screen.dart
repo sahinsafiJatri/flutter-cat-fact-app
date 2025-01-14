@@ -2,14 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cat_fact_app/presentation/home/bloc/home_bloc.dart';
-import 'package:flutter_cat_fact_app/presentation/home/home_page_cat_facts.dart';
+import 'package:flutter_cat_fact_app/presentation/home/home_screen_cat_facts.dart';
 import '../../core/di/injection_container.dart';
 import '../../core/ui/NetworkError.dart';
 
-part 'home_page_banner.dart';
+part 'home_screen_banner.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +42,9 @@ class HomePage extends StatelessWidget {
 
       return ListView(
         children: [
-          HomePageBanner(bannerList: state.banners),
+          HomeScreenBanner(bannerList: state.banners),
           factLabel(context),
-          Expanded(child: HomePageCatFacts(list: state.catFacts))
+          Expanded(child: HomeScreenCatFacts(list: state.catFacts))
         ],
       );
 

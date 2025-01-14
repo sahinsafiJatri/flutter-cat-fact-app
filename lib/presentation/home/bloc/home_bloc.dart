@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cat_fact_app/core/common/api_result.dart';
 import 'package:flutter_cat_fact_app/core/domain/usecase/get_cat_fact_api_use_case.dart';
 import 'package:flutter_cat_fact_app/core/entity/cat_facts_entity.dart';
@@ -23,7 +23,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     switch(apiResult) {
       case ApiSuccess() : {
-        emit(state.copyWith(banners: bannerList, catFacts: apiResult.data, isLoading: false));
+        emit(state.copyWith(banners: bannerList, catFacts: apiResult.data, isLoading: false, errorMessage: ""));
         return;
       }
       case ApiError() : {
